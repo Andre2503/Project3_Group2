@@ -36,8 +36,9 @@ def welcome():
         "/api/v1.0/top_ten<br/>"
         "/api/v1.0/industry_groups<br/>"
         "/api/v1.0/top_ten_historic<br/>"
-    )
+        "/api/v1.0/fundamental<br/>"
 
+    )
 
 
 @app.route("/api/v1.0/top_ten")
@@ -101,6 +102,55 @@ def get_top_ten_historic():
     all_top_ten_historic = list(np.ravel(results))
 
     return jsonify(all_top_ten_historic)
+
+
+@app.route("/api/v1.0/fundamental")
+def get_fundamental():
+    # Create our session (link) from Python to the DB
+    session = Session(engine)
+
+    """Return a list of fundamental"""
+    # Reflejar la tabla fundamental
+    fundamental = Base.classes.fundamental
+
+    # Query all fundamental data
+    results = session.query(
+        fundamental.id,
+        fundamental.Ticker,
+        fundamental.lastPrice,
+        fundamental.Change,
+        fundamental.volumePerDay,
+        fundamental.volume4wAvg,
+        fundamental.Open,
+        fundamental.dayRange,
+        fundamental.prevClose,
+        fundamental.lastTrade,
+        fundamental.oneWeek ,
+        fundamental.oneMonth,
+        fundamental.YTD2023,
+        fundamental.vsSectorOneYr,
+        fundamental.vsASX200OneYr,
+        fundamental.marketCap,
+        fundamental.ASXRank,
+        fundamental.sectorRank,
+        fundamental.sharesIssued,
+        fundamental.Sector,
+        fundamental.similarCompanies,
+        fundamental.EPS,
+        fundamental.DPS,
+        fundamental.bookValuePerShare,
+        fundamental.Breakdown,
+        fundamental.Recommendation,
+        fundamental.lastUpdated,
+        fundamental.PE,
+    ).all()
+
+    session.close()
+
+    # Convert list of tuples into a normal list
+    all_fundamental = list(np.ravel(results))
+
+    return jsonify(all_fundamental)
 
 
 
