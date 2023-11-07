@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ASX Stock Selector</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="./static/js/styles.css">
+</head>
+<body>
+    <div class="header">
+        <h1>ASX Stock Selector</h1>
+
+        <h2>An Interactive Method of Evaluating</h2>
+    </div>
+    
+
+    <label for="industryGroup">Select Industry Group:</label>
+    <select id="industryGroup" name="industryGroup">
+        <option value="technology">Technology</option>
+        <option value="finance">Finance</option>
+        <option value="healthcare">Healthcare</option>
+        <!-- Add more industry groups as needed -->
+    </select>
+
+    <br>
+
+    <label for="ticker">Select Ticker:</label>
+    <select id="ticker" name="ticker">
+        <option value="AAPL">AAPL</option>
+        <option value="GOOGL">GOOGL</option>
+        <option value="MSFT">MSFT</option>
+        <!-- Add more ticker options as needed -->
+    </select>
+
+    <div class="stock-information">
+        <h3>Stock Information</h3>
+        <ul>
+            <li><strong>Last Price:</strong> <span id="lastPrice"></span></li>
+            <li><strong>Change:</strong> <span id="change"></span></li>
+            <li><strong>Bid/Ask:</strong> <span id="bidAsk"></span></li>
+            <!-- Add more stock information items here -->
+        </ul>
+    </div>
+    
+
+    <div class="container">
+        <div class="left-content">
+            <!-- Existing content goes here -->
+        </div>
+        <div class="right-content">
+            <div id="tickerChart"></div>
+        </div>
+    </div>
+
+
+
+    <div class="bottom-charts">
+        <div id="marketCapChart" class="chart"></div>
+        <div id="epsChart" class="chart"></div>
+        <div id="peChart" class="chart"></div>
+    </div>
+
+    <script src="./static/js/plot4.js"></script>
+</body>
+</html>

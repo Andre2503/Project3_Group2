@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ASX Stock Selector</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+<body>
+    <h1>ASX Stock Selector</h1>
+    <h2>An Interactive Method of Evaluating</h2>
+
+    <label for="industryGroup">Select Industry Group:</label>
+    <select id="industryGroup" name="industryGroup">
+        <option value="technology">Technology</option>
+        <option value="finance">Finance</option>
+        <option value="healthcare">Healthcare</option>
+        <!-- Add more industry groups as needed -->
+    </select>
+
+    <br>
+
+    <label for="ticker">Select Ticker:</label>
+    <select id="ticker" name="ticker">
+        <option value="AAPL">AAPL</option>
+        <option value="GOOGL">GOOGL</option>
+        <option value="MSFT">MSFT</option>
+        <!-- Add more ticker options as needed -->
+    </select>
+
+    <div class="container">
+        <div class="left-content">
+            <!-- Existing content goes here -->
+        </div>
+        <div class="right-content">
+            <div id="tickerChart"></div>
+        </div>
+    </div>
+
+    <div class="bottom-charts">
+        <div id="marketCapChart" class="chart"></div>
+        <div id="epsChart" class="chart"></div>
+        <div id="peChart" class="chart"></div>
+    </div>
+
+    
+    <!-- <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script> -->
+    <script src="./static/js/plot.js"></script>
+    <!-- <script src="./static/js/app.js"></script>
+    <script src="./static/js/bonus.js"></script>
+</body> -->
+</html>
