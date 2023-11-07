@@ -1,13 +1,103 @@
 <!DOCTYPE html>
-<html>
-<head><link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <title>ASX Data Visualization</title>
-    <script src="https://d3js.org/d3.v5.min.js"></script>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<div id="plot"></div>
+<title>ASX Dashboard</title>
+<style>
+  body { font-family: Arial, sans-serif; }
+  .container { width: 80%; margin: auto; }
+  .response-container { margin-top: 20px; }
+  table { width: 100%; border-collapse: collapse; }
+  th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+  th { background-color: #f2f2f2; }
+</style>
 </head>
 <body>
-    <h1>ASX Data Visualization</h1>
-    <div id="visualisation"></div>
-    <script src="visualization.js"></script>
+<div class="container">
+  <h1>ASX Dashboard</h1>
+  <button id="loadIndustry">Load Industries</button>
+  <button id="loadTicker">Load Tickers</button>
+  <div class="response-container">
+    <h2>Industries</h2>
+    <ul id="industryList"></ul>
+    <h2>Tickers</h2>
+    <table id="tickerTable">
+      <thead>
+        <tr>
+          <th>Company Name</th>
+          <th>Industry ID</th>
+          <th>Volume</th>
+        </tr>
+      </thead>
+      <tbody>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div id="plot"></div>
+
+
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+<script>
+// Wait for the DOM to load
+document.addEventListener('DOMContentLoaded', function () {
+  document.getElementById('loadIndustry').addEventListener('click', loadIndustries);
+  document.getElementById('loadTicker').addEventListener('click', loadTickers);
+});
+
+function loadIndustries() {
+  fetch('/api/v1.0/Industry')
+    .then(response => response.json())
+    .then(data => {
+      const industryList = document.getElementById('industryList');
+      industryList.innerHTML = ''; // Clear the list
+      data.forEach(industry => {
+        const li = document.createElement('li');
+        li.textContent = industry;
+        industryList.appendChild(li);
+      });
+    });
+}
+
+function loadTickers() {
+  fetch('/api/v1.0/Ticker')
+    .then(response => response.json())
+    .then(data => {
+      const tbody = document.getElementById('tickerTable').querySelector('tbody');
+      tbody.innerHTML = ''; // Clear the table body
+      data.forEach(ticker => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `<td>${ticker.company_name}</td>
+                        <td>${ticker.industry_id}</td>
+                        <td>${ticker.volume}</td>`;
+        tbody.appendChild(tr);
+      });
+    });
+}
+</script>
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+<script>
+  // Plot the data returned by our Flask API
+  fetch('/api/v1.0/Plot')
+    .then(response => response.json())
+    .then(data => {
+      const trace = {
+        x: data.map(row => row.company_name),
+        y: data.map(row => row.volume),
+        type: 'bar'
+      };
+      const layout = {
+        title: 'ASX Dashboard',
+        xaxis: { title: 'Company Name' },
+        yaxis: { title: 'Volume' }
+      };
+      Plotly.newPlot('plot', [trace], layout);
+    });
+</script>
 </body>
 </html>
-
