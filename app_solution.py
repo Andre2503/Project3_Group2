@@ -33,26 +33,12 @@ def welcome():
     """List all available API routes."""
     return (
         "Available Routes:<br/>"
-        "/api/v1.0/industry_groups<br/>"
         "/api/v1.0/top_ten<br/>"
+        "/api/v1.0/industry_groups<br/>"
         "/api/v1.0/top_ten_historic<br/>"
     )
 
-@app.route("/api/v1.0/industry_groups")
-def get_industry_groups():
-    # Create our session (link) from Python to the DB
-    session = Session(engine)
 
-    """Return a list of industry names"""
-    # Query all industry names
-    results = session.query(industry_groups.industry_name).all()
-
-    session.close()
-
-    # Convert list of tuples into a normal list
-    all_industry_groups = list(np.ravel(results))
-
-    return jsonify(all_industry_groups)
 
 @app.route("/api/v1.0/top_ten")
 def get_top_ten():
@@ -69,6 +55,23 @@ def get_top_ten():
     all_top_ten = list(np.ravel(results))
 
     return jsonify(all_top_ten)
+
+
+@app.route("/api/v1.0/industry_groups")
+def get_industry_groups():
+    # Create our session (link) from Python to the DB
+    session = Session(engine)
+
+    """Return a list of industry names"""
+    # Query all industry names
+    results = session.query(industry_groups.industry_name).all()
+
+    session.close()
+
+    # Convert list of tuples into a normal list
+    all_industry_groups = list(np.ravel(results))
+
+    return jsonify(all_industry_groups)
 
 
 @app.route("/api/v1.0/top_ten_historic")
