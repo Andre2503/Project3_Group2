@@ -8,29 +8,35 @@
 <body>
     <div class="header">
         <h1>ASX Stock Selector</h1>
+
         <h2>An Interactive Method of Evaluating</h2>
     </div>
 
     <label for="industryGroup">Select Industry Group:</label>
     <select id="industryGroup" name="industryGroup">
-        <!-- Options will be populated dynamically from JavaScript -->
+        <!-- Options will be dynamically added here -->
     </select>
 
     <br>
 
     <label for="ticker">Select Ticker:</label>
     <select id="ticker" name="ticker">
-        <!-- Options will be populated dynamically from JavaScript -->
+        <option value="AAPL">AAPL</option>
+        <option value="GOOGL">GOOGL</option>
+        <option value="MSFT">MSFT</option>
+        <!-- Add more ticker options as needed -->
     </select>
 
-    <div class="stock-information" id="stockInformation">
+    <div class="stock-information">
         <h3>Stock Information</h3>
-        <div class="columns-container">
-            <div class="column" id="column1"></div>
-            <div class="column" id="column2"></div>
-            <div class="column" id="column3"></div>
-        </div>
+        <ul>
+            <li><strong>Last Price:</strong> <span id="lastPrice"></span></li>
+            <li><strong>Change:</strong> <span id="change"></span></li>
+            <li><strong>Bid/Ask:</strong> <span id="bidAsk"></span></li>
+            <!-- Add more stock information items here -->
+        </ul>
     </div>
+    
 
     <div class="container">
         <div class="left-content">
@@ -41,13 +47,14 @@
         </div>
     </div>
 
+
+
     <div class="bottom-charts">
         <div id="marketCapChart" class="chart"></div>
         <div id="epsChart" class="chart"></div>
         <div id="peChart" class="chart"></div>
     </div>
 
-    <!-- Include your JavaScript file containing the code -->
-    <script src="./static/js/plot5_copy.js"></script>
+    <script src="./static/js/plot4_improve.js"></script>
 </body>
 </html>

@@ -1,89 +1,234 @@
-// Define the urls
-url_topten = "http://127.0.0.1:5000/api/v1.0/top_ten"
-url_industry_gp = "http://127.0.0.1:5000/api/v1.0/industry_groups"
-url_topten_historic = "http://127.0.0.1:5000/api/v1.0/top_ten_historic"
-url_fundamental = "http://127.0.0.1:5000/api/v1.0/fundamental"
+// Wrap your code in a DOMContentLoaded event listener
+document.addEventListener("DOMContentLoaded", async function () {
+
+  // Define the URLs
+  const url_topten = "http://127.0.0.1:5000/api/v1.0/top_ten";
+  const url_industry_gp = "http://127.0.0.1:5000/api/v1.0/industry_groups";
+  const url_topten_historic = "http://127.0.0.1:5000/api/v1.0/top_ten_historic";
+  const url_fundamental = "http://127.0.0.1:5000/api/v1.0/fundamental"; // Removed `${selectedTicker}`
+
+  const stockInformationOrder = [
+    'lastPrice',
+    'Change',
+    'Bid_Ask',
+    'volumePerDay',
+    'volume4wAvg',
+    'Open',
+    'dayRange',
+    'prevClose',
+    'lastTrade',
+    'oneWeek',
+    'oneMonth',
+    'YTD2023',
+    'vsSectorOneYr',
+    'vsASX200OneYr',
+    'marketCap',
+    'ASXRank',
+    'sectorRank',
+    'sharesIssued',
+    'Sector',
+    'similarCompanies',
+    'EPS',
+    'DPS',
+    'bookValuePerShare',
+    'Breakdown',
+    'Recommendation',
+    'lastUpdated',
+    'PE',
+  ];
+
+  async function fetchData(url) {
+    try {
+      const response = await fetch(url);
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const data = await response.json();
+
+      if (data.error) {
+        throw new Error(`API error: ${data.error}`);
+      }
+
+      return data;
+    } catch (error) {
+      console.error("Error fetching data:", error.message);
+      // You might want to handle this error more gracefully in your application
+    }
+  }
+
+  // Function to populate the Industry Group dropdown
+  async function populateIndustryGroupDropdown() {
+    try {
+      const industryGroups = await fetchData(url_industry_gp);
+      console.log('Industry Groups:', industryGroups);
+
+      const industryGroupDropdown = document.getElementById('industryGroup');
+
+      // Clear existing options
+      industryGroupDropdown.innerHTML = '';
+
+      industryGroups.forEach((group) => {
+        const option = document.createElement('option');
+        option.value = group;
+        option.textContent = group;
+        industryGroupDropdown.appendChild(option);
+      });
+    } catch (error) {
+      console.error('Error populating Industry Group dropdown:', error);
+    }
+  }
+
+  // Call the function to populate the dropdown when the page loads
+  populateIndustryGroupDropdown();
+
+  // Function to populate the Ticker dropdown
+  async function populateTickerDropdown() {
+    try {
+      const tickerData = await fetchData(url_topten);
+
+      const tickerDropdown = document.getElementById("ticker");
+
+      // Clear existing options
+      tickerDropdown.innerHTML = "";
+
+      // Start the loop from the 0th index and increment by 4 in each iteration
+      for (let i = 0; i < tickerData.length; i += 4) {
+        const ticker = tickerData[i];
+        const option = document.createElement("option");
+        option.value = ticker;
+        option.textContent = ticker;
+        tickerDropdown.appendChild(option);
+      }
+    } catch (error) {
+      console.error("Error populating Ticker dropdown:", error);
+    }
+  }
+
+  // Call the function to populate the dropdown when the page loads
+  populateTickerDropdown();
+
+  // Function to update stock information based on the selected Ticker
+  async function updateStockInfo(selectedTicker) {
+    try {
+      const stockData = await fetchData(`${url_fundamental}/${selectedTicker}`);
+      console.log('Stock Data:', stockData);
+
+      // Find the stock with the selected Ticker in the array
+      const selectedStock = stockData.find((stock) => stock.Ticker === selectedTicker);
+
+      if (selectedStock) {
+        const columnsContainer = document.getElementById('stockInformation').getElementsByClassName('columns-container')[0];
+
+        // Clear existing content in columns
+        for (let i = 1; i <= 3; i++) {
+          const column = document.getElementById(`column${i}`);
+          column.innerHTML = '';
+        }
+
+        let columnIndex = 1;
+
+        stockInformationOrder.forEach((key) => {
+          const value = selectedStock[key];
+          const listItem = document.createElement('li');
+          listItem.innerHTML = `<strong>${key}:</strong> <span>${value}</span>`;
+
+          // Append to the current column
+          const currentColumn = document.getElementById(`column${columnIndex}`);
+          currentColumn.appendChild(listItem);
+
+          // Move to the next column (and wrap around if needed)
+          columnIndex = (columnIndex % 3) + 1;
+        });
+      } else {
+        stockInformation.innerHTML = `<p>Data for ${selectedTicker} not found.</p>`;
+        console.error(`Data for ${selectedTicker} not found.`);
+      }
+    } catch (error) {
+      console.error('Error updating stock information:', error);
+    }
+  }
 
 
-// Sample data for the time series chart
-const timeSeriesData = [
-  { x: [1, 2, 3, 4, 5], y: [30, 20, 10, 25, 15], type: 'scatter', mode: 'lines', name: 'Ticker Data' }
-];
+  // Function to update the time series chart based on the selected Ticker
+  async function updateTimeSeriesChart(selectedTicker) {
+    try {
+      // Fetch data for the time series chart from the URL
+      const historicData = await fetchData(url_topten_historic);
 
-const timeSeriesLayout = {
-  title: 'Ticker Time Series',
-  xaxis: { title: 'Time' },
-  yaxis: { title: 'Value' }
-};
+      // Extract x and y data from the response (assuming specific fields in your API response)
+      const xData = historicData.Date; // Modify based on your API response structure
+      const yData = historicData.Close; // Modify based on your API response structure
 
-// Sample data for the bar charts
-const marketCapData = [
-  { x: ['Company A', 'Company B', 'Company C', 'Company D', 'Company E', 'Company F', 'Company G', 'Company H', 'Company I', 'Company J'], y: [100, 80, 70, 60, 55, 50, 45, 40, 35, 30], type: 'bar', name: 'Market Cap (in billions USD)' }
-];
+      const chartData = [
+        {
+          x: xData,
+          y: yData,
+          type: 'scatter',
+          mode: 'lines',
+          name: 'Ticker Data',
+        },
+      ];
 
-const epsData = [
-  { x: ['Company A', 'Company B', 'Company C', 'Company D', 'Company E', 'Company F', 'Company G', 'Company H', 'Company I', 'Company J'], y: [2.5, 3, 3.2, 2.8, 2.9, 3.5, 3.1, 2.7, 3.3, 3.0], type: 'bar', name: 'EPS (USD)' }
-];
+      // Update the time series chart with the fetched data
+      Plotly.newPlot('tickerChart', chartData, timeSeriesLayout);
+    } catch (error) {
+      console.error('Error updating time series chart:', error);
+    }
+  }
 
-const peData = [
-  { x: ['Company A', 'Company B', 'Company C', 'Company D', 'Company E', 'Company F', 'Company G', 'Company H', 'Company I', 'Company J'], y: [20, 25, 22, 19, 20, 18, 21, 23, 20, 21], type: 'bar', name: 'PE Ratio' }
-];
+  // Function to update the bar charts based on the selected Industry Group
+  async function updateBarCharts(selectedIndustryGroup) {
+    try {
+      const fundamentalData = await fetchData(url_fundamental);
 
-const barChartLayout = {
-  barmode: 'group',
-  title: 'Top Ten Companies Comparison',
-  xaxis: { title: 'Company' },
-  yaxis: { title: 'Value' }
-};
+      const companies = fundamentalData.companies; // Modify based on your API response structure
+      const marketCapValues = fundamentalData.marketCap; // Modify based on your API response structure
+      const epsValues = fundamentalData.eps; // Modify based on your API response structure
+      const peValues = fundamentalData.pe; // Modify based on your API response structure
 
-// Function to update stock information based on the selected Ticker
-function updateStockInfo(selectedTicker) {
-  // Fetch stock information for the selected Ticker
-  // Replace the following with your data retrieval logic or API calls
+      // Update market cap data
+      const marketCapChartData = [
+        { x: companies, y: marketCapValues, type: 'bar', name: 'Market Cap (in billions USD)' }
+      ];
 
-  // Sample data (replace with actual data)
-  const stockInfo = {
-      lastPrice: 150.00,
-      change: 5.00,
-      bidAsk: '150.50 / 150.60',
-      // Add more stock information properties here
+      // Update EPS data
+      const epsChartData = [
+        { x: companies, y: epsValues, type: 'bar', name: 'EPS (USD)' }
+      ];
+
+      // Update PE data
+      const peChartData = [
+        { x: companies, y: peValues, type: 'bar', name: 'PE Ratio' }
+      ];
+
+      // Update the bar charts with the fetched data
+      Plotly.newPlot('marketCapChart', marketCapChartData, barChartLayout);
+      Plotly.newPlot('epsChart', epsChartData, barChartLayout);
+      Plotly.newPlot('peChart', peChartData, barChartLayout);
+    } catch (error) {
+      console.error("Error updating bar charts:", error);
+    }
+  }
+
+  // Define your layout for the charts
+  const timeSeriesLayout = {
+    title: 'Ticker Time Series',
+    xaxis: { title: 'Time' },
+    yaxis: { title: 'Value' }
   };
 
-  // Update the placeholders with actual stock information
-  document.getElementById('lastPrice').textContent = stockInfo.lastPrice;
-  document.getElementById('change').textContent = stockInfo.change;
-  document.getElementById('bidAsk').textContent = stockInfo.bidAsk;
-  // Update more placeholders as needed
+  const barChartLayout = {
+    barmode: 'group',
+    title: 'Top Ten Companies Comparison',
+    xaxis: { title: 'Company' },
+    yaxis: { title: 'Value' }
+  };
+
+  // Call your functions to initialize the charts
+  updateStockInfo('BHP Group'); // Replace with a default value if needed
+  updateTimeSeriesChart('BHP Group'); // Replace with a default value if needed
+  updateBarCharts('Materials'); // Replace with a default value if needed
+
 }
-
-// Function to update the time series chart based on the selected Ticker
-function updateTimeSeriesChart(selectedTicker) {
-  // Fetch data for the selected Ticker or generate data dynamically
-  // Replace the sample data with your actual data or data retrieval logic
-  // For example, you can use AJAX to fetch data from an API.
-
-  // Sample data update for the time series chart
-  // Here, we're just updating the chart with the sample data
-  Plotly.newPlot('tickerChart', timeSeriesData, timeSeriesLayout);
-}
-
-// Function to update the bar charts based on the selected Industry Group
-function updateBarCharts(selectedIndustryGroup) {
-  // Fetch data for Market Cap, EPS, and PE based on the selected Industry Group
-  // Replace the sample data with your actual data or data retrieval logic
-  // For example, you can use AJAX to fetch data from an API.
-
-  // Sample data update for Market Cap
-  Plotly.newPlot('marketCapChart', marketCapData, barChartLayout);
-
-  // Sample data update for EPS
-  Plotly.newPlot('epsChart', epsData, barChartLayout);
-
-  // Sample data update for PE
-  Plotly.newPlot('peChart', peData, barChartLayout);
-}
-
-// Initial chart display for the time series chart and bar charts (you can set default values here)
-updateStockInfo('AAPL');
-updateTimeSeriesChart('AAPL');
-updateBarCharts('technology');
