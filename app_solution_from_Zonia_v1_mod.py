@@ -1,5 +1,6 @@
 
 import numpy as np
+from datetime import datetime
 from flask import Flask, jsonify
 from sqlalchemy import create_engine
 from sqlalchemy.ext.automap import automap_base
@@ -39,8 +40,8 @@ def welcome():
         "Available Routes:<br/>"
         "/api/v1.0/ticker<br/>"
         "/api/v1.0/industry_groups<br/>"
-        "/api/v1.0/top_ten_historic<br/>"
         "/api/v1.0/fundamental<br/>"
+        "/api/v1.0/top_ten_historic<br/>"
 
     )
 
@@ -81,35 +82,6 @@ def get_industry_groups():
     all_industry_groups = list(np.ravel(results))
 
     return jsonify(all_industry_groups)
-
-
-@app.route("/api/v1.0/top_ten_historic")
-def get_top_ten_historic():
-    # Create our session (link) from Python to the DB
-    session = Session(engine)
-
-    """Return a list of top_ten_historic"""
-    # Reflejar la tabla top_ten_historic
-    top_ten_historic = Base.classes.top_ten_historic
-
-    # Query all top_ten_historic data
-    results = session.query(
-        top_ten_historic.id,
-        top_ten_historic.Ticker,
-        top_ten_historic.Date,
-        top_ten_historic.Open,
-        top_ten_historic.High,
-        top_ten_historic.Low,
-        top_ten_historic.Close,
-        top_ten_historic.Volume
-    ).all()
-
-    session.close()
-
-    # Convert list of tuples into a normal list
-    all_top_ten_historic = list(np.ravel(results))
-
-    return jsonify(all_top_ten_historic)
 
 
 @app.route("/api/v1.0/fundamental/<ticker>")
@@ -161,6 +133,54 @@ def get_fundamental_by_tickers(ticker):
     return jsonify(all_fundamental)
 
 
+
+@app.route("/api/v1.0/top_ten_historic")
+def get_top_ten_historic():
+    # Create our session (link) from Python to the DB
+    session = Session(engine)
+
+    """Return a list of top_ten_historic"""
+    # Reflejar la tabla top_ten_historic
+    top_ten_historic = Base.classes.top_ten_historic
+
+    # Query all top_ten_historic data
+    results = session.query(
+        top_ten_historic.id,
+        top_ten_historic.Ticker,
+        top_ten_historic.Date,
+        top_ten_historic.Open,
+        top_ten_historic.High,
+        top_ten_historic.Low,
+        top_ten_historic.Close,
+        top_ten_historic.Volume
+    ).all()
+
+    session.close()
+
+    # Convert list of tuples into a normal list
+    all_top_ten_historic = []
+
+    for result in results:
+        # Convert the date to the desired format (DD MM YYYY)
+        try:
+            formatted_date = result.Date.strftime("%d %m %Y")
+        except AttributeError as e:
+            print(f"Error formatting date: {e}")
+            formatted_date = "Invalid Date"
+
+        # Append the formatted date along with other data
+        all_top_ten_historic.append({
+            "id": result.id,
+            "Ticker": result.Ticker,
+            "Date": formatted_date,
+            "Open": result.Open,
+            "High": result.High,
+            "Low": result.Low,
+            "Close": result.Close,
+            "Volume": result.Volume
+        })
+
+    return jsonify(all_top_ten_historic)
 
 
 
