@@ -83,11 +83,19 @@
     <script src="./static/js/plot9.js"></script>
 
     <script>
+        // Add an event listener to the Industry Group dropdown
+        document.getElementById("industryGroup").addEventListener("change", () => {
+            const selectedIndustryGroup = document.getElementById("industryGroup").value;
+            populateTickerDropdown(selectedIndustryGroup);
+            updateBarCharts(selectedIndustryGroup);
+        });
+    
         // Add an event listener to the "ticker" dropdown
         document.getElementById("ticker").addEventListener("change", function() {
             const selectedTicker = this.value;
             updateStockInfo(selectedTicker);
             updateTimeSeriesChart(selectedTicker);
+            updateBarCharts(selectedIndustryGroup); // Make sure this line is also present
             // You can also call other functions to update charts here if needed
         });
     </script>

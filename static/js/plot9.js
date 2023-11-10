@@ -317,9 +317,12 @@ const barChartLayout = {
 };
 
 
+
 // Add an event listener to the Industry Group dropdown
 document.getElementById("industryGroup").addEventListener("change", () => {
-  populateTickerDropdown(document.getElementById("industryGroup").value);
+  const selectedIndustryGroup = document.getElementById("industryGroup").value;
+  populateTickerDropdown(selectedIndustryGroup);
+  updateBarCharts(selectedIndustryGroup);
 });
 
 

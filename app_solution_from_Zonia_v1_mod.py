@@ -11,7 +11,7 @@ from flask_cors import CORS  # This will allow your front-end code to make reque
 #################################################
 # Database Setup
 #################################################
-engine = create_engine('sqlite:///Resources/top_ten_asx.db')
+engine = create_engine('sqlite:///Resources/top_ten_asx_new.db')
 
 # Reflejar la base de datos en un modelo automap
 Base = automap_base()
