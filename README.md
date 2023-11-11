@@ -72,3 +72,18 @@ Here is an overview of the file structure and contents of this repository:
 ## Conclusion
 
 The ASX Stock Selector Dashboard showcases the power of combining data science with web development to create a practical and interactive tool for stock analysis. 
+
+## Data Sources and Copyright
+
+### Data Sources
+
+The data used in this dashboard is sourced from the following:
+
+- **Australian Securities Exchange (ASX)**: Used to identify the top 10 companies per sector. Available at: [ASX Directory](https://www.asx.com.au/markets/trade-our-cash-market/directory).
+- **Yahoo Finance**: Financial information for each ticker was retrieved using the `yfinance` library, which provides a reliable method of data scraping.
+- **Market Index**: For comprehensive financial details per ticker, we scraped data from [Market Index](https://www.marketindex.com.au/asx-listed-companies).
+
+### Copyright Notice
+
+The data presented in this dashboard is the property of the respective data providers, including the Australian Securities Exchange and Yahoo Finance. The information provided by this dashboard is for informational/ educational purposes only and is not intended for trading or investment advice. We do not hold any responsibility for financial decisions made based on the information provided by our dashboard. 
+
