@@ -1,4 +1,3 @@
-
 import numpy as np
 from datetime import datetime
 from flask import Flask, jsonify
@@ -131,7 +130,6 @@ def get_fundamental_by_tickers(ticker):
     all_fundamental = list(np.ravel(results))
 
     return jsonify(all_fundamental)
-
 
 
 @app.route("/api/v1.0/top_ten_historic")
