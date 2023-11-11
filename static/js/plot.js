@@ -9,7 +9,6 @@ const stockInformationOrder = [
   'industry_gp',
   'lastPrice',
   'Change',
-  'Bid_Ask',
   'volumePerDay',
   'volume4wAvg',
   'Open',
