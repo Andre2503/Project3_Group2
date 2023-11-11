@@ -10,7 +10,7 @@ from flask_cors import CORS  # This will allow your front-end code to make reque
 #################################################
 # Database Setup
 #################################################
-engine = create_engine('sqlite:///Resources/top_ten_asx_new.db')
+engine = create_engine('sqlite:///Resources/top_ten_asx.db')
 
 # Reflejar la base de datos en un modelo automap
 Base = automap_base()
@@ -96,6 +96,8 @@ def get_fundamental_by_tickers(ticker):
     results = session.query(
         fundamental.id,
         fundamental.Ticker,
+        fundamental.company_name,
+        fundamental.industry_gp,
         fundamental.lastPrice,
         fundamental.Change,
         fundamental.volumePerDay,

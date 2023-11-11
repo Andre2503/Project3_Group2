@@ -5,6 +5,8 @@ const url_topten_historic = "http://127.0.0.1:5000/api/v1.0/top_ten_historic";
 // const url_fundamental = "http://127.0.0.1:5000/api/v1.0/fundamental";
 
 const stockInformationOrder = [
+  'company_name',
+  'industry_gp',
   'lastPrice',
   'Change',
   'Bid_Ask',
@@ -115,6 +117,8 @@ async function updateStockInfo(selectedTicker) {
     const [
       id,
       ticker,
+      company_name,
+      industry_gp,
       lastPrice,
       Change,
       volumePerDay,
@@ -144,32 +148,34 @@ async function updateStockInfo(selectedTicker) {
     ] = stockData;
 
     // Update each column with the corresponding information
-    document.getElementById('column1').textContent = `Last Price: ${lastPrice}`;
-    document.getElementById('column2').textContent = `Change: ${Change}`;
-    document.getElementById('column3').textContent = `Volume Per Day: ${volumePerDay}`;
-    document.getElementById('column4').textContent = `Volume 4wk Avg: ${volume4wAvg}`;
-    document.getElementById('column5').textContent = `Open: ${Open}`;
-    document.getElementById('column6').textContent = `Day Range: ${dayRange}`;
-    document.getElementById('column7').textContent = `Previous Close: ${prevClose}`;
-    document.getElementById('column8').textContent = `Last Trade: ${lastTrade}`;
-    document.getElementById('column9').textContent = `One Week: ${oneWeek}`;
-    document.getElementById('column10').textContent = `One Month: ${oneMonth}`;
-    document.getElementById('column11').textContent = `2023 YTD: ${YTD2023}`;
-    document.getElementById('column12').textContent = `vs Sector (1 Year): ${vsSectorOneYr}`;
-    document.getElementById('column13').textContent = `vs ASX200 (1 Year): ${vsASX200OneYr}`;
-    document.getElementById('column14').textContent = `Market Cap: ${marketCap}`;
-    document.getElementById('column15').textContent = `ASX Rank: ${ASXRank}`;
-    document.getElementById('column16').textContent = `Sector Rank: ${sectorRank}`;
-    document.getElementById('column17').textContent = `Shares Issued: ${sharesIssued}`;
-    document.getElementById('column18').textContent = `Sector: ${Sector}`;
-    document.getElementById('column19').textContent = `Similar Companies: ${similarCompanies}`;
-    document.getElementById('column20').textContent = `EPS: ${EPS}`;
-    document.getElementById('column21').textContent = `DPS: ${DPS}`;
-    document.getElementById('column22').textContent = `Book Value PerShare: ${bookValuePerShare}`;
-    document.getElementById('column23').textContent = `Breakdown: ${Breakdown}`;
-    document.getElementById('column24').textContent = `Recommendation: ${Recommendation}`;
-    document.getElementById('column25').textContent = `Last Updated: ${lastUpdated}`;
-    document.getElementById('column26').textContent = `PE: ${PE}`;
+    document.getElementById('column1').textContent = `Companyy Name: ${company_name}`;
+    document.getElementById('column2').textContent = `Industry Group: ${industry_gp}`;
+    document.getElementById('column3').textContent = `Last Price: ${lastPrice}`;
+    document.getElementById('column4').textContent = `Change: ${Change}`;
+    document.getElementById('column6').textContent = `Volume Per Day: ${volumePerDay}`;
+    document.getElementById('column7').textContent = `Volume 4wk Avg: ${volume4wAvg}`;
+    document.getElementById('column8').textContent = `Open: ${Open}`;
+    document.getElementById('column9').textContent = `Day Range: ${dayRange}`;
+    document.getElementById('column10').textContent = `Previous Close: ${prevClose}`;
+    document.getElementById('column11').textContent = `Last Trade: ${lastTrade}`;
+    document.getElementById('column12').textContent = `One Week: ${oneWeek}`;
+    document.getElementById('column13').textContent = `One Month: ${oneMonth}`;
+    document.getElementById('column14').textContent = `2023 YTD: ${YTD2023}`;
+    document.getElementById('column15').textContent = `vs Sector (1 Year): ${vsSectorOneYr}`;
+    document.getElementById('column16').textContent = `vs ASX200 (1 Year): ${vsASX200OneYr}`;
+    document.getElementById('column17').textContent = `Market Cap: ${marketCap}`;
+    document.getElementById('column18').textContent = `ASX Rank: ${ASXRank}`;
+    document.getElementById('column19').textContent = `Sector Rank: ${sectorRank}`;
+    document.getElementById('column20').textContent = `Shares Issued: ${sharesIssued}`;
+    document.getElementById('column21').textContent = `Sector: ${Sector}`;
+    document.getElementById('column22').textContent = `Similar Companies: ${similarCompanies}`;
+    document.getElementById('column23').textContent = `EPS: ${EPS}`;
+    document.getElementById('column24').textContent = `DPS: ${DPS}`;
+    document.getElementById('column25').textContent = `Book Value PerShare: ${bookValuePerShare}`;
+    document.getElementById('column26').textContent = `Breakdown: ${Breakdown}`;
+    document.getElementById('column27').textContent = `Recommendation: ${Recommendation}`;
+    document.getElementById('column28').textContent = `Last Updated: ${lastUpdated}`;
+    document.getElementById('column29').textContent = `PE: ${PE}`;
     
       
     // Continue updating other columns as needed
@@ -283,10 +289,10 @@ async function updateBarCharts(selectedIndustryGroup) {
       // Return the data
       return {
         ticker: selectedTicker.ticker,
-        marketCap: fundamentalData[15], // Adjust the index based on your data structure
-        eps: fundamentalData[21], // Adjust the index based on your data structure
-        dps: fundamentalData[22], // Adjust the index based on your data structure
-        pe: fundamentalData[27], // Adjust the index based on your data structure
+        marketCap: fundamentalData[17], // Adjust the index based on your data structure
+        eps: fundamentalData[23], // Adjust the index based on your data structure
+        dps: fundamentalData[24], // Adjust the index based on your data structure
+        pe: fundamentalData[29], // Adjust the index based on your data structure
       };
     });
 
