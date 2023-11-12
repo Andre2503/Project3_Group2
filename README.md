@@ -52,7 +52,7 @@ To get started with the dashboard:
 2. (Optional) Set up a virtual environment in the project directory.
 3. Install the required dependencies:
    ```
-   pip install -r requirements.txt
+   pip install flask-cors
    ```
 
 ### Running the Application
@@ -63,7 +63,7 @@ To get started with the dashboard:
    ```
    python app_solution.py
    ```
-4. Access the dashboard through `http://localhost:5000/` in your web browser.
+4. Access the dashboard through the `index.html` in your web browser.
 
 
 ## Features
