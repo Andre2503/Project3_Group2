@@ -81,10 +81,10 @@ To get started with the dashboard:
 1. **Data Downloading:** We sourced a comprehensive list of ASX-listed companies, including their market capitalization and industry groups, directly from the ASX website.
 2. **Selection of Top Companies:** Using market capitalization, we identified the leading companies within each industry group.
 3. **Scraping Fundamental Data:** For each of these top companies, we extracted fundamental data from various web sources, storing this information in a dedicated database.
+4. **Historical Stock Price Retrieval:** We utilized the `yfinance` Python library to obtain historical stock price data for each company in our top 10 list.
 
 **Data Processing and Database Creation:**
 
-4. **Historical Stock Price Retrieval:** We utilized the `yfinance` Python library to obtain historical stock price data for each company in our top 10 list.
 5. **ETL Process:** The data gathered underwent an Extract, Transform, Load (ETL) process, primarily using Python's pandas library.
 6. **Database Schema and Creation:** We designed a database schema and created four relational tables. The database was constructed using SQLAlchemy.
 
@@ -97,22 +97,24 @@ To get started with the dashboard:
 ### Structure
 
 - **Backend:** Flask application with SQLAlchemy for database management.
-- **Frontend:** HTML for structure, JavaScript (including libraries like Plotly and Chart.js) for dynamic features, and CSS for styling.
+- **Frontend:** HTML for structure, JavaScript (including libraries like `Plotly` and [Chart.js](https://www.chartjs.org/) for dynamic features, and CSS for styling.
 
 
 ## Scripts 
 
-- `index.html`: Main HTML file that structures the web dashboard.
 - `01_ASX_Top10_Dataframes_Historic.ipynb`: Jupyter notebook for retrieving top 10 companies per industry group and historical stock data.
 - `02_Retrive_ASX_Ticker_Fundamentals.ipynb`: Script for scraping fundamental data of ASX-listed companies.
 - `03_Creating_DataBase.ipynb`: Notebook detailing the creation of the database structure.
 - `app_solution.py`: The Flask application script.
+- `index.html`: Main HTML file that structures the web dashboard.
+- `plot.js`: script for fetching the neccesary data, plotting interactive chartys, updating tables and initialising the dashboard.
+- `styles.css` : script for formatting the dashboard
 
 ## Repository Structure
 
 - **Root Directory:** Contains the main application files like `index.html`, Jupyter notebooks (`01_ASX_Top10_Dataframes_Historic.ipynb`, etc.), and the Flask script `app_solution`.
 - **Images Directory:** Includes assets like `ASX_top_ten_ERD.jpg`.
-- **Static Directory:** Stores scripts, stylesheets, and other static files.
+- **Static/js Directory:** Stores `plot.js` and `styles.css`.
 - **Resources Directory:** Contains datasets and the database file.
 ![image](https://github.com/Andre2503/Project3_Group2/assets/120079788/5ff4e40f-486b-4218-a1b2-243d5f006aea)
 
@@ -138,7 +140,7 @@ This dashboard exemplifies the integration of data science and web technologies 
 
 ## References
 
-- Codes and approaches inspired by lecture notes and various online resources.
+- Codes and approaches inspired by lecture notes and ChatGPT.
 - [1] Iterate over a Dictionary [https://buzzcoder.gitbooks.io/codecraft-javascript/content/object/iterate-over-a-dictionary.html](https://buzzcoder.gitbooks.io/codecraft-javascript/content/object/iterate-over-a-dictionary.html)
 - [2] D3 Removing Elements [https://stackoverflow.com/questions/16260285/d3-removing-elements](https://stackoverflow.com/questions/16260285/d3-removing-elements)
 - [3] Math.max() [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/max#](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/max#)
