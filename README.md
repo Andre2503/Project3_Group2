@@ -104,10 +104,22 @@ To get started with the dashboard:
 
 - `01_ASX_Top10_Dataframes_Historic.ipynb`: Jupyter notebook for retrieving top 10 companies per industry group and historical stock data.
 - `02_Retrive_ASX_Ticker_Fundamentals.ipynb`: Script for scraping fundamental data of ASX-listed companies.
+	- Total of 250 tickers were scraped.  Scraping done 10 tickers at a time and later merged to create the raw CSV file.
+	- various steps were taken to clean the dataset to create the final clean CSV file.
+	- `PE' column was computed using the formula `PE = lastPrice/EPS` and ensuring the value is zero if EPS is zero or Null.
 - `03_Creating_DataBase.ipynb`: Notebook detailing the creation of the database structure.
+	- 4 tables were created 'industry_groups`, `top_ten`, `top_ten_historic` and `fundamental` in the `top_ten_asx.db` database. 
 - `app_solution.py`: The Flask application script.
+	- 4 json end points are created corresponding to the 4 tables.
 - `index.html`: Main HTML file that structures the web dashboard.
 - `plot.js`: script for fetching the neccesary data, plotting interactive chartys, updating tables and initialising the dashboard.
+	- the url variables corresponding to the 4 json end points are declared.
+	- `fetchData()` - an asynchronous function design to fetchdata from url.
+	- `populateIndustryGroupDropdown()` - function designed to populate the industryGroups drowndown.
+	- `populateTickerDropdown()` - function designed to populate the ticker drowndown based on industryGroup selected.
+	- `updateStockInfo()` - functon designed to populate the Stock Information per ticker.
+	- `updateTimeSeriesChart()` - function designed to create line chart per ticker
+	- `updateBarCharts()` - function designed to create bar charts for `Market Cap`, `EPS`, `DPS` and `PE`.
 - `styles.css` : script for formatting the dashboard
 
 ## Repository Structure
@@ -123,7 +135,7 @@ To get started with the dashboard:
 
 The data used in this dashboard is sourced from the following:
 
-- **Australian Securities Exchange (ASX)**: Used to identify the top 10 companies per sector. Available at: [ASX Directory](https://www.asx.com.au/markets/trade-our-cash-market/directory).
+- **Australian Securities Exchange (ASX)**: Used to identify the top 10 companies per industry group. Please note that ASX uses industry group while Market Index uses sector.  Available at: [ASX Directory](https://www.asx.com.au/markets/trade-our-cash-market/directory).
 - **Yahoo Finance**: Financial information for each ticker was retrieved using the `yfinance` library, which provides a reliable method of data scraping.
 - **Market Index**: For comprehensive financial details per ticker, we scraped data from [Market Index](https://www.marketindex.com.au/asx-listed-companies).
 
@@ -139,6 +151,6 @@ This dashboard exemplifies the integration of data science and web technologies 
 ## References
 
 - Codes and approaches inspired by lecture notes and ChatGPT.
-- [1] yfinance Pyhton Tutorial (2023) [https://analyzingalpha.com/yfinance-python]
+- [1] yfinance Python Tutorial (2023) [https://analyzingalpha.com/yfinance-python]
 
 
