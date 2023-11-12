@@ -27,7 +27,7 @@ Github repository at: [https://github.com/Andre2503/Project3_Group2.git](https:/
 
 ### Overview
 
-The ASX Stock Selector Dashboard is an advanced, interactive tool designed to present comprehensive stock information. It offers users a user-friendly platform to explore and analyze the top 10 companies in various industry groups based on market capitalization. Unique features include real-time data updates, interactive charts, and detailed company analysis.
+The ASX Stock Selector Dashboard is an advanced, interactive tool designed to present comprehensive stock information. It offers users a user-friendly platform to explore and analyze the top 10 companies in various industry groups based on market capitalization. Unique features include data updates, interactive charts, and detailed company analysis.
 
 ### Objective
 
