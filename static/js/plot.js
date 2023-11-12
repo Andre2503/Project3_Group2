@@ -8,7 +8,6 @@ const stockInformationOrder = [
   'industry_gp',
   'lastPrice',
   'Change',
-  'Bid_Ask',
   'volumePerDay',
   'volume4wAvg',
   'Open',
@@ -102,6 +101,8 @@ async function populateTickerDropdown(selectedIndustryGroup) {
 
 // Call the function to populate the dropdown when the page loads
 populateTickerDropdown('Automobiles & Components'); // Replace with a default value if needed
+
+
 
 // Function to update stock information based on the selected Ticker
 async function updateStockInfo(selectedTicker) {
@@ -228,6 +229,7 @@ async function updateTimeSeriesChart(selectedTicker) {
             label: selectedTicker,
             data: yDataList,
             borderColor: 'red', // Change the line color to red
+            // borderColor: 'rgba(75, 192, 192, 1)',
             borderWidth: 2,
             fill: false,
             pointRadius: 0, // Set pointRadius to 0 to remove dots
@@ -304,12 +306,12 @@ async function updateBarCharts(selectedIndustryGroup) {
 
     // Step 7: Update market cap data
     const marketCapChartData = [
-      { x: companies, y: marketCapValues, type: 'bar', name: 'Market Cap (in billions AUD)' }
+      { x: companies, y: marketCapValues, type: 'bar', name: 'Market Cap (in billions USD)' }
     ];
 
     // Step 8: Update EPS data
     const epsChartData = [
-      { x: companies, y: epsValues, type: 'bar', name: 'EPS (AUD)' }
+      { x: companies, y: epsValues, type: 'bar', name: 'EPS (USD)' }
     ];
 
      // Step 9: Update PE data
@@ -327,7 +329,7 @@ async function updateBarCharts(selectedIndustryGroup) {
       barmode: 'group',
       title: 'Market Cap Comparison',
       xaxis: { title: 'Company' },
-      yaxis: { title: 'Market Cap (in billions AUD)' }
+      yaxis: { title: 'Market Cap (in billions USD)' }
     };
     Plotly.newPlot('marketCapChart', marketCapChartData, marketCapChartLayout);
 
@@ -336,7 +338,7 @@ async function updateBarCharts(selectedIndustryGroup) {
       barmode: 'group',
       title: 'EPS Comparison',
       xaxis: { title: 'Company' },
-      yaxis: { title: 'EPS (AUD)' }
+      yaxis: { title: 'EPS (USD)' }
     };
     Plotly.newPlot('epsChart', epsChartData, epsChartLayout);
 
@@ -345,7 +347,7 @@ async function updateBarCharts(selectedIndustryGroup) {
       barmode: 'group',
       title: 'Dividend PerShare',
       xaxis: { title: 'Company' },
-      yaxis: { title: 'DPS (AUD)' }
+      yaxis: { title: 'DPS (USD)' }
     };
 
     Plotly.newPlot('dpsChart', dpsChartData, dpsChartLayout);
