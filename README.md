@@ -38,7 +38,7 @@ Our objective is to combine the power of data science and web development to cre
 
 - Python (version 3.x recommended)
 - yfinance library - for running the file `01_ASX_Top10_Dataframes_Historic`
-- CORS
+- Flask-Cors installation 
 - A modern web browser
 
 ### Installation
