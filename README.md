@@ -68,9 +68,9 @@ To get started with the dashboard:
 
 ## Features
 
-- Industry Group Selection: Users can choose from a dropdown menu to select an industry group.
-- Company Selection: A second dropdown enables the selection of an individual company ticker within the chosen industry group.
-- Interactive Charts: Dynamic display of historical stock prices, selected stock's fundamental information and comparison charts for various financial metrics within the selected industry group.
+- **Industry Group Selection**: Users can choose from a dropdown menu to select an industry group.
+- **Company Selection**: A second dropdown enables the selection of an individual company ticker within the chosen industry group.
+- **Interactive Charts**: Dynamic display of historical stock prices, selected stock's fundamental information and comparison charts for various financial metrics within the selected industry group.
 
 ## Approach
 
