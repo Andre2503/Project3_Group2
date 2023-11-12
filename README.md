@@ -106,9 +106,9 @@ To get started with the dashboard:
 - `02_Retrive_ASX_Ticker_Fundamentals.ipynb`: Script for scraping fundamental data of ASX-listed companies.
 	- Total of 250 tickers were scraped.  Scraping done 10 tickers at a time and later merged to create the raw CSV file.
 	- various steps were taken to clean the dataset to create the final clean CSV file.
-	- `PE' column was computed using the formula `PE = lastPrice/EPS` and ensuring the value is zero if EPS is zero or Null.
+	- `PE` column was computed using the formula `PE = lastPrice/EPS` and ensuring the value is zero if EPS is zero or Null.
 - `03_Creating_DataBase.ipynb`: Notebook detailing the creation of the database structure.
-	- 4 tables were created 'industry_groups`, `top_ten`, `top_ten_historic` and `fundamental` in the `top_ten_asx.db` database. 
+	- 4 tables were created `industry_groups`, `top_ten`, `top_ten_historic` and `fundamental` in the `top_ten_asx.db` database. 
 - `app_solution.py`: The Flask application script.
 	- 4 json end points are created corresponding to the 4 tables.
 - `index.html`: Main HTML file that structures the web dashboard.
@@ -117,7 +117,7 @@ To get started with the dashboard:
 	- `fetchData()` - an asynchronous function design to fetchdata from url.
 	- `populateIndustryGroupDropdown()` - function designed to populate the industryGroups drowndown.
 	- `populateTickerDropdown()` - function designed to populate the ticker drowndown based on industryGroup selected.
-	- `updateStockInfo()` - functon designed to populate the Stock Information per ticker.
+	- `updateStockInfo()` - function designed to populate the Stock Information per ticker.
 	- `updateTimeSeriesChart()` - function designed to create line chart per ticker
 	- `updateBarCharts()` - function designed to create bar charts for `Market Cap`, `EPS`, `DPS` and `PE`.
 - `styles.css` : script for formatting the dashboard
