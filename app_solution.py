@@ -25,7 +25,7 @@ top_ten = Base.classes.top_ten
 #################################################
 
 app = Flask(__name__)
-CORS(app)     # this is added with the from flask_cors import CORS commands
+CORS(app)     # this is added with from the flask_cors import CORS commands
 cors = CORS(app, resources={r"/api/*": {"origins": "*"}})  # added to do fundamentals
 
 #################################################
@@ -83,13 +83,12 @@ def get_industry_groups():
     return jsonify(all_industry_groups)
 
 
-@app.route("/api/v1.0/fundamental/<ticker>")
+@app.route("/api/v1.0/fundamental/<ticker>")  # create end points per ticker 
 def get_fundamental_by_tickers(ticker):
     # Create our session (link) from Python to the DB
     session = Session(engine)
 
     """Return a list of fundamental"""
-    # Reflejar la tabla fundamental
     fundamental = Base.classes.fundamental
 
     # Query all fundamental data for the given Ticker
@@ -124,7 +123,7 @@ def get_fundamental_by_tickers(ticker):
         fundamental.Recommendation,
         fundamental.lastUpdated,
         fundamental.PE,
-    ).filter(fundamental.Ticker == ticker).all()
+    ).filter(fundamental.Ticker == ticker).all()  # filter data per ticker
 
     session.close()
 

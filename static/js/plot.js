@@ -2,7 +2,6 @@
 const url_ticker = "http://127.0.0.1:5000/api/v1.0/ticker";
 const url_industry_gp = "http://127.0.0.1:5000/api/v1.0/industry_groups";
 const url_topten_historic = "http://127.0.0.1:5000/api/v1.0/top_ten_historic";
-// const url_fundamental = "http://127.0.0.1:5000/api/v1.0/fundamental";
 
 const stockInformationOrder = [
   'company_name',
@@ -103,8 +102,6 @@ async function populateTickerDropdown(selectedIndustryGroup) {
 
 // Call the function to populate the dropdown when the page loads
 populateTickerDropdown('Automobiles & Components'); // Replace with a default value if needed
-
-
 
 // Function to update stock information based on the selected Ticker
 async function updateStockInfo(selectedTicker) {
@@ -231,7 +228,6 @@ async function updateTimeSeriesChart(selectedTicker) {
             label: selectedTicker,
             data: yDataList,
             borderColor: 'red', // Change the line color to red
-            // borderColor: 'rgba(75, 192, 192, 1)',
             borderWidth: 2,
             fill: false,
             pointRadius: 0, // Set pointRadius to 0 to remove dots
@@ -308,12 +304,12 @@ async function updateBarCharts(selectedIndustryGroup) {
 
     // Step 7: Update market cap data
     const marketCapChartData = [
-      { x: companies, y: marketCapValues, type: 'bar', name: 'Market Cap (in billions USD)' }
+      { x: companies, y: marketCapValues, type: 'bar', name: 'Market Cap (in billions AUD)' }
     ];
 
     // Step 8: Update EPS data
     const epsChartData = [
-      { x: companies, y: epsValues, type: 'bar', name: 'EPS (USD)' }
+      { x: companies, y: epsValues, type: 'bar', name: 'EPS (AUD)' }
     ];
 
      // Step 9: Update PE data
@@ -331,7 +327,7 @@ async function updateBarCharts(selectedIndustryGroup) {
       barmode: 'group',
       title: 'Market Cap Comparison',
       xaxis: { title: 'Company' },
-      yaxis: { title: 'Market Cap (in billions USD)' }
+      yaxis: { title: 'Market Cap (in billions AUD)' }
     };
     Plotly.newPlot('marketCapChart', marketCapChartData, marketCapChartLayout);
 
@@ -340,7 +336,7 @@ async function updateBarCharts(selectedIndustryGroup) {
       barmode: 'group',
       title: 'EPS Comparison',
       xaxis: { title: 'Company' },
-      yaxis: { title: 'EPS (USD)' }
+      yaxis: { title: 'EPS (AUD)' }
     };
     Plotly.newPlot('epsChart', epsChartData, epsChartLayout);
 
@@ -349,7 +345,7 @@ async function updateBarCharts(selectedIndustryGroup) {
       barmode: 'group',
       title: 'Dividend PerShare',
       xaxis: { title: 'Company' },
-      yaxis: { title: 'DPS (USD)' }
+      yaxis: { title: 'DPS (AUD)' }
     };
 
     Plotly.newPlot('dpsChart', dpsChartData, dpsChartLayout);
@@ -378,9 +374,6 @@ document.getElementById("industryGroup").addEventListener("change", () => {
 
 // Call your functions to initialize the charts
 window.onload = function () {
-  // Remove the redundant call below if not needed
-  // updateStockInfo('ARB');
-
   // Call functions after defining them for better readability
   populateIndustryGroupDropdown();
   populateTickerDropdown('Automobiles & Components');
