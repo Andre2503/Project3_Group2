@@ -116,8 +116,6 @@ To get started with the dashboard:
 - **Images Directory:** Includes assets like `ASX_top_ten_ERD.jpg`.
 - **Static/js Directory:** Stores `plot.js` and `styles.css`.
 - **Resources Directory:** Contains datasets and the database file.
-![image](https://github.com/Andre2503/Project3_Group2/assets/120079788/5ff4e40f-486b-4218-a1b2-243d5f006aea)
-
 
 ## Data Sources and Copyright
 
