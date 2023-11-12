@@ -139,9 +139,6 @@ This dashboard exemplifies the integration of data science and web technologies 
 ## References
 
 - Codes and approaches inspired by lecture notes and ChatGPT.
-- [1] Iterate over a Dictionary [https://buzzcoder.gitbooks.io/codecraft-javascript/content/object/iterate-over-a-dictionary.html](https://buzzcoder.gitbooks.io/codecraft-javascript/content/object/iterate-over-a-dictionary.html)
-- [2] D3 Removing Elements [https://stackoverflow.com/questions/16260285/d3-removing-elements](https://stackoverflow.com/questions/16260285/d3-removing-elements)
-- [3] Math.max() [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/max#](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/max#)
-- [4] yfinance Pyhton Tutorial (2023) [https://analyzingalpha.com/yfinance-python]
+- [1] yfinance Pyhton Tutorial (2023) [https://analyzingalpha.com/yfinance-python]
 
 
