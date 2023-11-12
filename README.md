@@ -77,16 +77,19 @@ To get started with the dashboard:
 ### Methodology
 
 **Data Acquisition and Analysis:**
+
 1. **Data Downloading:** We sourced a comprehensive list of ASX-listed companies, including their market capitalization and industry groups, directly from the ASX website.
 2. **Selection of Top Companies:** Using market capitalization, we identified the leading companies within each industry group.
 3. **Scraping Fundamental Data:** For each of these top companies, we extracted fundamental data from various web sources, storing this information in a dedicated database.
 
 **Data Processing and Database Creation:**
+
 4. **Historical Stock Price Retrieval:** We utilized the `yfinance` Python library to obtain historical stock price data for each company in our top 10 list.
 5. **ETL Process:** The data gathered underwent an Extract, Transform, Load (ETL) process, primarily using Python's pandas library.
 6. **Database Schema and Creation:** We designed a database schema and created four relational tables. The database was constructed using SQLAlchemy.
 
 **Application Development and Deployment:**
+
 7. **API Development:** A Flask application was developed to generate APIs. These APIs allow for various queries, either targeting specific tables or joining them to fetch necessary data for our dashboard.
 8. **Front-End Development:** The dashboard's front end was crafted using HTML for structure, JavaScript for interactivity, and CSS for formatting and aesthetics.
 
