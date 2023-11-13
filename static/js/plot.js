@@ -53,7 +53,12 @@ async function populateIndustryGroupDropdown() {
   try {
     const industryGroups = await fetchData(url_industry_gp);
 
-    const industryGroupDropdown = document.getElementById("industryGroup");
+    const industryGroupDropdown = document.getElementById("industryGroupDropdown");
+
+    if (!industryGroupDropdown) {
+      console.error("Industry Group dropdown element not found");
+      return;
+    }
 
     // Clear existing options
     industryGroupDropdown.innerHTML = "";
@@ -66,7 +71,8 @@ async function populateIndustryGroupDropdown() {
     });
 
     // Call the function to populate the Ticker dropdown with the selected industry group
-    populateTickerDropdown(industryGroupDropdown.value);
+    const selectedIndustryGroup = industryGroupDropdown.value;
+    populateTickerDropdown(selectedIndustryGroup);
   } catch (error) {
     console.error("Error populating Industry Group dropdown:", error);
   }
@@ -75,15 +81,18 @@ async function populateIndustryGroupDropdown() {
 // Call the function to populate the dropdown when the page loads
 populateIndustryGroupDropdown();
 
-// Function to populate the Ticker dropdown
 async function populateTickerDropdown(selectedIndustryGroup) {
   try {
     // Use the new URL for fetching ticker data
     const tickerData = await fetchData(url_ticker);
 
+    console.log("Ticker Data:", tickerData);  // Log the fetched data
+
     const filteredTickers = tickerData.filter(ticker => ticker.industry_name === selectedIndustryGroup);
 
-    const tickerDropdown = document.getElementById("ticker");
+    console.log("Filtered Tickers:", filteredTickers);  // Log the filtered data
+
+    const tickerDropdown = document.getElementById("tickerDropdown");
 
     // Clear existing options
     tickerDropdown.innerHTML = "";
@@ -366,22 +375,41 @@ async function updateBarCharts(selectedIndustryGroup) {
   }
 }
 
+// Function to handle the change in dropdown value
+function optionChanged(value) {
+  // Handle the change, you can use the 'value' parameter
+  console.log('Selected value:', value);
+  // You may want to call other functions or perform actions here
+}
+
 // Add an event listener to the Industry Group dropdown
-document.getElementById("industryGroup").addEventListener("change", () => {
-  const selectedIndustryGroup = document.getElementById("industryGroup").value;
+document.getElementById("industryGroupDropdown").addEventListener("change", (event) => {
+  selectedIndustryGroup = event.target.value;
   populateTickerDropdown(selectedIndustryGroup);
   updateBarCharts(selectedIndustryGroup);
 });
 
+// Add an event listener to the "ticker" dropdown
+document.getElementById("tickerDropdown").addEventListener("change", (event) => {
+  const selectedTicker = event.target.value;
+  updateStockInfo(selectedTicker);
+  updateTimeSeriesChart(selectedTicker);
+  updateBarCharts(selectedIndustryGroup);
+});
 
 // Call your functions to initialize the charts
-window.onload = function () {
+document.addEventListener("DOMContentLoaded", function () {
   // Call functions after defining them for better readability
-  populateIndustryGroupDropdown();
-  populateTickerDropdown('Automobiles & Components');
+  initializePage();
+});
+
+// Function to initialize the page
+async function initializePage() {
+  await populateIndustryGroupDropdown();
+  await populateTickerDropdown('Automobiles & Components');
 
   updateStockInfo('ARB');
   updateTimeSeriesChart('ARB');
   updateBarCharts('Automobiles & Components');
-};
+}
 

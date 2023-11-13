@@ -131,6 +131,8 @@ To get started with the dashboard:
 	- `updateStockInfo()` - function designed to populate the Stock Information per ticker.
 	- `updateTimeSeriesChart()` - function designed to create line chart per ticker
 	- `updateBarCharts()` - function designed to create bar charts for `Market Cap`, `EPS`, `DPS` and `PE`.
+	- `optionChanged()` - function to handle the change in dropdown value
+	- `initializePage()` - function to initialize the page
 - `styles.css` : script for formatting the dashboard
 
 ## Repository Structure
