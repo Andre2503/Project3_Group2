@@ -1,4 +1,7 @@
 # ASX Stock Selector Dashboard
+
+Project3 - UWA/edX Data Analytics Bootcamp
+
 Github repository at: [https://github.com/Andre2503/Project3_Group2.git](https://github.com/Andre2503/Project3_Group2.git)
 
 ## Table of Contents
@@ -28,6 +31,12 @@ Github repository at: [https://github.com/Andre2503/Project3_Group2.git](https:/
 ### Overview
 
 The ASX Stock Selector Dashboard is an advanced, interactive tool designed to present comprehensive stock information. It offers users a user-friendly platform to explore and analyze the top 10 companies in various industry groups based on market capitalization. Unique features include data updates, interactive charts, and detailed company analysis.
+
+This is a team effort with the following contributors:
+- Andrea A
+- Zonia Q
+- Edrin N
+- Geoffrey P
 
 ### Objective
 
@@ -75,6 +84,7 @@ To get started with the dashboard:
 ## Approach
 
 ### Methodology
+- Refer to Project Workflow diagram.  [!Project Workflow](./Images/Project_Workflow.jpg)](https://github.com/Andre2503/Project3_Group2/blob/main/Images/Project_Workflow.jpg)
 
 **Data Acquisition and Analysis:**
 
@@ -87,6 +97,7 @@ To get started with the dashboard:
 
 5. **ETL Process:** The data gathered underwent an Extract, Transform, Load (ETL) process, primarily using Python's pandas library.
 6. **Database Schema and Creation:** We designed a database schema and created four relational tables. The database was constructed using SQLAlchemy.
+- Refer to project schema diagram. [!Project Schema](./Images/ASX_top_ten_ERD.jpg)](https://github.com/Andre2503/Project3_Group2/blob/main/Images/ASX_top_ten_ERD.jpg)
 
 **Application Development and Deployment:**
 
