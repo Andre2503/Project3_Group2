@@ -84,7 +84,7 @@ To get started with the dashboard:
 ## Approach
 
 ### Methodology
-- Refer to Project Workflow diagram.  [![Project Workflow](./Images/Project_Workflow.jpg)](https://github.com/Andre2503/Project3_Group2/blob/main/Images/Project_Workflow.jpg)
+- Refer to Project Workflow diagram.  [!Project Workflow](./Images/Project_Workflow.jpg)](https://github.com/Andre2503/Project3_Group2/blob/main/Images/Project_Workflow.jpg)
 
 **Data Acquisition and Analysis:**
 Refer to project worflow. ![Project Workflow](./Project_Workflow.jpg)
