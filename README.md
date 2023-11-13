@@ -84,7 +84,8 @@ To get started with the dashboard:
 ## Approach
 
 ### Methodology
-- Refer to Project Workflow diagram.  ![Project Workflow](./Images/Project_Workflow.jpg)
+- Refer to Project Workflow diagram.  [![Project Workflow](./Images/Project_Workflow.jpg)](https://github.com/Andre2503/Project3_Group2/blob/main/Images/Project_Workflow.jpg)
+
 **Data Acquisition and Analysis:**
 Refer to project worflow. ![Project Workflow](./Project_Workflow.jpg)
 1. **Data Downloading:** We sourced a comprehensive list of ASX-listed companies, including their market capitalization and industry groups, directly from the ASX website.
@@ -96,7 +97,7 @@ Refer to project worflow. ![Project Workflow](./Project_Workflow.jpg)
 
 5. **ETL Process:** The data gathered underwent an Extract, Transform, Load (ETL) process, primarily using Python's pandas library.
 6. **Database Schema and Creation:** We designed a database schema and created four relational tables. The database was constructed using SQLAlchemy.
-- Refer to project schema diagram. ![Project Schema](./Images/ASX_top_ten_ERD.jpg)
+- Refer to project schema diagram. [!Project Schema](./Images/ASX_top_ten_ERD.jpg)](https://github.com/Andre2503/Project3_Group2/blob/main/Images/ASX_top_ten_ERD.jpg)
 
 **Application Development and Deployment:**
 
