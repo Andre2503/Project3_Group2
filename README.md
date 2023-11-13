@@ -35,7 +35,7 @@ The ASX Stock Selector Dashboard is an advanced, interactive tool designed to pr
 This is a team effort with the following contributors:
 - Andrea A
 - Zonia Q
-- Edrin Ngadze
+- Edrin N
 - Geoffrey P
 
 ### Objective
