@@ -1,4 +1,7 @@
 # ASX Stock Selector Dashboard
+
+Project3 - UWA/edX Data Analytics Bootcamp
+
 Github repository at: [https://github.com/Andre2503/Project3_Group2.git](https://github.com/Andre2503/Project3_Group2.git)
 
 ## Table of Contents
@@ -29,6 +32,11 @@ Github repository at: [https://github.com/Andre2503/Project3_Group2.git](https:/
 
 The ASX Stock Selector Dashboard is an advanced, interactive tool designed to present comprehensive stock information. It offers users a user-friendly platform to explore and analyze the top 10 companies in various industry groups based on market capitalization. Unique features include data updates, interactive charts, and detailed company analysis.
 
+This is a team effort with the following contributors:
+	- Andrea A
+	- Zonia Q
+	- Edrin Ngadze
+	- Geoffrey P
 ### Objective
 
 Our objective is to combine the power of data science and web development to create a practical, insightful tool for stock market analysis.
