@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>ASX Stock Selector</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/luxon@2.1.1/build/global/luxon.min.js"></script>
@@ -13,17 +14,28 @@
         <h3>An Interactive Method of Evaluating</h3>
     </div>
 
-    <label for="industryGroup">Select Industry Group:</label>
-    <select id="industryGroup" name="industryGroup">
-        <!-- Options will be populated dynamically from JavaScript -->
-    </select>
-
+    <div class="row">
+        <div class="col-md-2">
+            <div class="well">
+                <h5 class="bold-header">Select Industry Group:</h5>
+                <select class="form-control" id="industryGroupDropdown" onchange="optionChanged(this.value)">
+                    <!-- Options will be populated dynamically from JavaScript -->
+                </select>
+            </div>
+        </div>
+    
+        <div class="col-md-2">
+            <div class="well">
+                <h5 class="bold-header">Select Ticker:</h5>
+                <select class="form-control" id="tickerDropdown" onchange="optionChanged(this.value)">
+                    <!-- Options will be populated dynamically from JavaScript -->
+                </select>
+            </div>
+        </div>
+    </div>
+    
     <br>
 
-    <label for="ticker">Select Ticker:</label>
-    <select id="ticker" name="ticker">
-        <!-- Options will be populated dynamically from JavaScript -->
-    </select>
 
     <div class="Stock_Information_header">
         <h3>Stock Information</h3>
@@ -102,21 +114,20 @@
 
     <script>
         // Add an event listener to the Industry Group dropdown
-        document.getElementById("industryGroup").addEventListener("change", () => {
-            const selectedIndustryGroup = document.getElementById("industryGroup").value;
+        document.getElementById("industryGroupDropdown").addEventListener("change", (event) => {
+            selectedIndustryGroup = event.target.value;
             populateTickerDropdown(selectedIndustryGroup);
             updateBarCharts(selectedIndustryGroup);
         });
     
         // Add an event listener to the "ticker" dropdown
-        document.getElementById("ticker").addEventListener("change", function() {
-            const selectedTicker = this.value;
+        document.getElementById("tickerDropdown").addEventListener("change", (event) => {
+            selectedTicker = event.target.value;
             updateStockInfo(selectedTicker);
             updateTimeSeriesChart(selectedTicker);
             updateBarCharts(selectedIndustryGroup);
-            
         });
-
     </script>
+    
 </body>
 </html>
