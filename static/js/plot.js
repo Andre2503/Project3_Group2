@@ -34,83 +34,76 @@ const stockInformationOrder = [
   'PE',
 ];
 
-// Function to fetch data from a URL and work with the JSON response
-async function fetchData(url) {
-  try {
-    const response = await fetch(url);
-    if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
+  // Function to fetch data from a URL and work with the JSON response
+  async function fetchData(url) {
+    try {
+      const data = await d3.json(url); // Use D3's json method to fetch data
+      return data;
+    } catch (error) {
+      console.error("Error fetching data:", error);
     }
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    console.error("Error fetching data:", error);
   }
-}
 
-// Function to populate the Industry Group dropdown
-async function populateIndustryGroupDropdown() {
-  try {
-    const industryGroups = await fetchData(url_industry_gp);
+  // Function to populate the Industry Group dropdown
+  async function populateIndustryGroupDropdown() {
+    try {
+      const industryGroups = await fetchData(url_industry_gp);
 
-    const industryGroupDropdown = document.getElementById("industryGroupDropdown");
+      const industryGroupDropdown = d3.select("#industryGroupDropdown");
 
-    if (!industryGroupDropdown) {
-      console.error("Industry Group dropdown element not found");
-      return;
+      if (industryGroupDropdown.empty()) {
+        console.error("Industry Group dropdown element not found");
+        return;
+      }
+
+      // Clear existing options
+      industryGroupDropdown.html("");
+
+      industryGroups.forEach((group) => {
+        industryGroupDropdown.append("option")
+          .attr("value", group)
+          .text(group);
+      });
+
+      // Call the function to populate the Ticker dropdown with the selected industry group
+      const selectedIndustryGroup = industryGroupDropdown.property("value");
+      populateTickerDropdown(selectedIndustryGroup);
+    } catch (error) {
+      console.error("Error populating Industry Group dropdown:", error);
     }
-
-    // Clear existing options
-    industryGroupDropdown.innerHTML = "";
-
-    industryGroups.forEach((group) => {
-      const option = document.createElement("option");
-      option.value = group;
-      option.textContent = group;
-      industryGroupDropdown.appendChild(option);
-    });
-
-    // Call the function to populate the Ticker dropdown with the selected industry group
-    const selectedIndustryGroup = industryGroupDropdown.value;
-    populateTickerDropdown(selectedIndustryGroup);
-  } catch (error) {
-    console.error("Error populating Industry Group dropdown:", error);
   }
-}
 
-// Call the function to populate the dropdown when the page loads
-populateIndustryGroupDropdown();
+  // Call the function to populate the dropdown when the page loads
+  populateIndustryGroupDropdown();
 
-async function populateTickerDropdown(selectedIndustryGroup) {
-  try {
-    // Use the new URL for fetching ticker data
-    const tickerData = await fetchData(url_ticker);
+  async function populateTickerDropdown(selectedIndustryGroup) {
+    try {
+      // Use the new URL for fetching ticker data
+      const tickerData = await fetchData(url_ticker);
 
-    console.log("Ticker Data:", tickerData);  // Log the fetched data
+      console.log("Ticker Data:", tickerData);  // Log the fetched data
 
-    const filteredTickers = tickerData.filter(ticker => ticker.industry_name === selectedIndustryGroup);
+      const filteredTickers = tickerData.filter(ticker => ticker.industry_name === selectedIndustryGroup);
 
-    console.log("Filtered Tickers:", filteredTickers);  // Log the filtered data
+      console.log("Filtered Tickers:", filteredTickers);  // Log the filtered data
 
-    const tickerDropdown = document.getElementById("tickerDropdown");
+      const tickerDropdown = d3.select("#tickerDropdown");
 
-    // Clear existing options
-    tickerDropdown.innerHTML = "";
+      // Clear existing options
+      tickerDropdown.html("");
 
-    filteredTickers.forEach((ticker) => {
-      const option = document.createElement("option");
-      option.value = ticker.ticker;
-      option.textContent = ticker.ticker;
-      tickerDropdown.appendChild(option);
-    });
-  } catch (error) {
-    console.error("Error populating Ticker dropdown:", error);
+      filteredTickers.forEach((ticker) => {
+        tickerDropdown.append("option")
+          .attr("value", ticker.ticker)
+          .text(ticker.ticker);
+      });
+    } catch (error) {
+      console.error("Error populating Ticker dropdown:", error);
+    }
   }
-}
 
-// Call the function to populate the dropdown when the page loads
-populateTickerDropdown('Automobiles & Components'); // Replace with a default value if needed
-
+  // Call the function to populate the dropdown when the page loads
+  populateTickerDropdown('Automobiles & Components'); // Replace with a default value if needed
 
 
 // Function to update stock information based on the selected Ticker
@@ -272,10 +265,10 @@ async function updateTimeSeriesChart(selectedTicker) {
 
 
 
-// Function to update the bar charts based on the selected Industry Group
-async function updateBarCharts(selectedIndustryGroup) {
+  // Function to update the bar charts based on the selected Industry Group using D3 for data fetching and Plotly for plotting
+  async function updateBarCharts(selectedIndustryGroup) {
   try {
-    // Step 1: Fetch ticker data
+    // Step 1: Fetch ticker data using D3
     const tickerData = await fetchData(url_ticker);
     console.log("Step 1 - Ticker Data:", tickerData);
 
@@ -287,7 +280,7 @@ async function updateBarCharts(selectedIndustryGroup) {
     const companies = filteredTickers.map(ticker => ticker.ticker);
     console.log("Step 3 - Tickers:", companies);
 
-    // Step 4: Fetch fundamental data for each selected ticker
+    // Step 4: Fetch fundamental data for each selected ticker using D3
     const fundamentalPromises = filteredTickers.map(async (selectedTicker) => {
       const fundamentalUrl = `http://127.0.0.1:5000/api/v1.0/fundamental/${selectedTicker.ticker}`;
       const fundamentalData = await fetchData(fundamentalUrl);
@@ -303,113 +296,114 @@ async function updateBarCharts(selectedIndustryGroup) {
       };
     });
 
-    // Wait for all promises to resolve
-    const fundamentalResults = await Promise.all(fundamentalPromises);
+    // Wait for all promises to resolve using Promise.allSettled
+    const fundamentalResults = await Promise.allSettled(fundamentalPromises);
     console.log("Step 5 - Fundamental Results:", fundamentalResults);
 
     // Step 6: Extract necessary data for bar charts
-    const marketCapValues = fundamentalResults.map(company => parseFloat(company.marketCap));
-    const epsValues = fundamentalResults.map(company => parseFloat(company.eps));
-    const dpsValues = fundamentalResults.map(company => parseFloat(company.dps));
-    const peValues = fundamentalResults.map(company => parseFloat(company.pe));
+    const marketCapValues = fundamentalResults.map(result => result.value ? parseFloat(result.value.marketCap) : 0);
+    const epsValues = fundamentalResults.map(result => result.value ? parseFloat(result.value.eps) : 0);
+    const dpsValues = fundamentalResults.map(result => result.value ? parseFloat(result.value.dps) : 0);
+    const peValues = fundamentalResults.map(result => result.value ? parseFloat(result.value.pe) : 0);
 
-    // Step 7: Update market cap data
+    // Step 7: Update market cap data for Plotly
     const marketCapChartData = [
       { x: companies, y: marketCapValues, type: 'bar', name: 'Market Cap (in billions USD)' }
     ];
 
-    // Step 8: Update EPS data
+    // Step 8: Update EPS data for Plotly
     const epsChartData = [
-      { x: companies, y: epsValues, type: 'bar', name: 'EPS (USD)' }
+      { x: companies, y: epsValues, type: 'bar', name: 'EPS (AUD)' }
     ];
 
-     // Step 9: Update PE data
-     const dpsChartData = [
+    // Step 9: Update DPS data for Plotly
+    const dpsChartData = [
       { x: companies, y: dpsValues, type: 'bar', name: 'Dividend PerShare (DPS)' }
     ];
 
-    // Step 10: Update PE data
+    // Step 10: Update PE data for Plotly
     const peChartData = [
       { x: companies, y: peValues, type: 'bar', name: 'PE Ratio' }
     ];
 
-    // Update market cap chart
+    // Step 11: Update market cap chart using Plotly
     const marketCapChartLayout = {
       barmode: 'group',
       title: 'Market Cap Comparison',
       xaxis: { title: 'Company' },
-      yaxis: { title: 'Market Cap (in billions USD)' }
+      yaxis: { title: 'Market Cap (in billions AUD)' }
     };
     Plotly.newPlot('marketCapChart', marketCapChartData, marketCapChartLayout);
 
-    // Update EPS chart
+    // Step 12: Update EPS chart using Plotly
     const epsChartLayout = {
       barmode: 'group',
       title: 'EPS Comparison',
       xaxis: { title: 'Company' },
-      yaxis: { title: 'EPS (USD)' }
+      yaxis: { title: 'EPS (AUD)' }
     };
     Plotly.newPlot('epsChart', epsChartData, epsChartLayout);
 
-    // Update DPS chart
+    // Step 13: Update DPS chart using Plotly
     const dpsChartLayout = {
       barmode: 'group',
       title: 'Dividend PerShare',
       xaxis: { title: 'Company' },
-      yaxis: { title: 'DPS (USD)' }
+      yaxis: { title: 'DPS (AUD)' }
     };
-
     Plotly.newPlot('dpsChart', dpsChartData, dpsChartLayout);
 
-    // Update PE chart
+    // Step 14: Update PE chart using Plotly
     const peChartLayout = {
       barmode: 'group',
       title: 'PE Ratio Comparison',
       xaxis: { title: 'Company' },
       yaxis: { title: 'PE Ratio' }
     };
-
     Plotly.newPlot('peChart', peChartData, peChartLayout);
+
   } catch (error) {
     console.error("Error updating bar charts:", error);
   }
 }
 
-// Function to handle the change in dropdown value
-function optionChanged(value) {
-  // Handle the change, you can use the 'value' parameter
-  console.log('Selected value:', value);
-  // You may want to call other functions or perform actions here
-}
 
-// Add an event listener to the Industry Group dropdown
-document.getElementById("industryGroupDropdown").addEventListener("change", (event) => {
-  selectedIndustryGroup = event.target.value;
-  populateTickerDropdown(selectedIndustryGroup);
-  updateBarCharts(selectedIndustryGroup);
-});
 
-// Add an event listener to the "ticker" dropdown
-document.getElementById("tickerDropdown").addEventListener("change", (event) => {
-  const selectedTicker = event.target.value;
-  updateStockInfo(selectedTicker);
-  updateTimeSeriesChart(selectedTicker);
-  updateBarCharts(selectedIndustryGroup);
-});
+  // Function to handle the change in dropdown value
+  function optionChanged(value) {
+    // Handle the change, you can use the 'value' parameter
+    console.log('Selected value:', value);
+    // You may want to call other functions or perform actions here
+  }
 
-// Call your functions to initialize the charts
-document.addEventListener("DOMContentLoaded", function () {
-  // Call functions after defining them for better readability
-  initializePage();
-});
+  // Add an event listener to the Industry Group dropdown using D3
+  d3.select("#industryGroupDropdown").on("change", function() {
+    const selectedIndustryGroup = d3.select(this).property("value");
+    populateTickerDropdown(selectedIndustryGroup);
+    updateBarCharts(selectedIndustryGroup);
+  });
 
-// Function to initialize the page
-async function initializePage() {
-  await populateIndustryGroupDropdown();
-  await populateTickerDropdown('Automobiles & Components');
+  // Add an event listener to the "ticker" dropdown using D3
+  d3.select("#tickerDropdown").on("change", function() {
+    const selectedTicker = d3.select(this).property("value");
+    updateStockInfo(selectedTicker);
+    updateTimeSeriesChart(selectedTicker);
+    updateBarCharts(d3.select("#industryGroupDropdown").property("value"));
+  });
 
-  updateStockInfo('ARB');
-  updateTimeSeriesChart('ARB');
-  updateBarCharts('Automobiles & Components');
-}
+  // Call your functions to initialize the charts
+  document.addEventListener("DOMContentLoaded", async function () {
+    // Call functions after defining them for better readability
+    await initializePage();
+  });
+
+  // Function to initialize the page
+  async function initializePage() {
+    await populateIndustryGroupDropdown();
+    await populateTickerDropdown('Automobiles & Components');
+
+    updateStockInfo('ARB');
+    updateTimeSeriesChart('ARB');
+    updateBarCharts('Automobiles & Components');
+  }
 

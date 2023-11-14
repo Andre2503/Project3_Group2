@@ -123,7 +123,7 @@ To get started with the dashboard:
 - `app_solution.py`: The Flask application script.
 	- 4 json end points are created corresponding to the 4 tables.
 - `index.html`: Main HTML file that structures the web dashboard.
-- `plot.js`: script for fetching the neccesary data, plotting interactive chartys, updating tables and initialising the dashboard.
+- `plot.js`: script for fetching the neccesary data, plotting interactive charts, updating tables and initialising the dashboard.
 	- the url variables corresponding to the 4 json end points are declared.
 	- `fetchData()` - an asynchronous function design to fetchdata from url.
 	- `populateIndustryGroupDropdown()` - function designed to populate the industryGroups drowndown.
